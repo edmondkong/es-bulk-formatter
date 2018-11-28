@@ -6,11 +6,8 @@
 (defmulti bulk-operation (fn [op input] op))
 (defmethod bulk-operation :index [_ input]
   (str (generate-string {:index {}}) "\n" (generate-string input) "\n"))
-(defmethod bulk-operation :create [_ input]
-  (str (generate-string {:create {}}) "\n" (generate-string input) "\n"))
 (defmethod bulk-operation :delete [_ input]
   (str (generate-string {:delete {:_id input}}) "\n"))
-(defmethod bulk-operation :update [_ _])
 
 (defn read-json
   [file]
@@ -26,7 +23,6 @@
         (.write
           w
           (bulk-operation op input))))))
-
 
 (defn -main
   "I don't do a whole lot ... yet."
