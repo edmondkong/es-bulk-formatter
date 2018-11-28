@@ -23,7 +23,7 @@ Clojure REPL tool for creating Elasticsearch bulk operations.
 ...
 
 ## Things to do
-- [ ] Configurable `_id` field for `:index operation`
+- [ ] Configurable `_id` field for `:index` operation
 - [ ] Runnable as jar
 - [ ] Unit tests
 - [ ] Set up Travis CI
