@@ -3,11 +3,14 @@
            [clojure.java.io :refer :all])
   (:gen-class))
 
-(defmulti bulk-operation (fn [op] op))
-(defmethod bulk-operation :index [_] {:index {}})
-(defmethod bulk-operation :create [_])
-(defmethod bulk-operation :delete [_])
-(defmethod bulk-operation :update [_])
+(defmulti bulk-operation (fn [op input] op))
+(defmethod bulk-operation :index [_ input]
+  (str (generate-string {:index {}}) "\n" (generate-string input) "\n"))
+(defmethod bulk-operation :create [_ input]
+  (str (generate-string {:create {}}) "\n" (generate-string input) "\n"))
+(defmethod bulk-operation :delete [_ input]
+  (str (generate-string {:delete {:_id input}}) "\n"))
+(defmethod bulk-operation :update [_ _])
 
 (defn read-json
   [file]
@@ -17,17 +20,13 @@
 
 (defn bulk-format
   [in-file op out-file]
-  (let [inputs (read-json in-file)
-        bulk-op (bulk-operation op)]
+  (let [inputs (read-json in-file)]
     (with-open [w (writer out-file :append true)]
       (doseq [input inputs]
         (.write
           w
-          (str
-            (generate-string bulk-op)
-            "\n"
-            (generate-string input)
-            "\n"))))))
+          (bulk-operation op input))))))
+
 
 (defn -main
   "I don't do a whole lot ... yet."

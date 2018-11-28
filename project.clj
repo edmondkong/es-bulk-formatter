@@ -1,5 +1,5 @@
 (defproject es-bulk-formatter "0.1.0-SNAPSHOT"
-  :description "Clojure REPL tool for creating bulk operations for Elasticsearch"
+  :description "Clojure REPL tool for creating Elasticsearch bulk operations"
   :url "https://github.com/edmondkong/es-bulk-formatter"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
